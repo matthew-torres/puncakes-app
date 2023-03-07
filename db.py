@@ -7,7 +7,6 @@ load_dotenv()
 url = os.environ.get("DATABASE_URL")
 connection = psycopg2.connect(url)
 
-
 def create_tables():
     with connection:
         with connection.cursor() as cursor:
