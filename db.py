@@ -108,5 +108,5 @@ def insert_new_customer(name, password, email, phone_num, street, city, state, z
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
             """, (name, password, email, phone_num, street, city, state, zip,))
 
-create_tables()
+# create_tables()
             
