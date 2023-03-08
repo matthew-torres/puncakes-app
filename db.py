@@ -42,7 +42,16 @@ def create_tables():
                     zip         CHAR(5)    
                 );
             """)
-            # cursor.execute("""DROP TABLE employees, manager, staff;""")
+
+def __drop_table__(table: str):
+    choice = input("Are you sure you want to drop table {table}?(y/n)\n")
+    if (choice.lower() == 'y'):
+        with connection:
+            with connection.cursor() as cursor:
+                print(f"dropping {table}...")
+                cursor.execute(f"DROP TABLE {table}")
+                print(f"{table} dropped.")
+        
     
 def insert_new_manager(name, salary, password, startDate, jobTitle):
     with connection:
@@ -107,5 +116,4 @@ def insert_new_customer(name, password, email, phone_num, street, city, state, z
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
             """, (name, password, email, phone_num, street, city, state, zip,))
 
-# create_tables()
             
