@@ -13,7 +13,7 @@ def create_tables():
             cursor.execute(""" 
                 CREATE TABLE IF NOT EXISTS employees (
                     eid         SERIAL PRIMARY KEY,
-                    name "      VARCHAR(20),
+                    name        VARCHAR(20),
                     salary      INTEGER,
                     password    VARCHAR(15),
                     startDate   DATE
@@ -51,13 +51,12 @@ def __drop_table__(table: str):
                 print(f"dropping {table}...")
                 cursor.execute(f"DROP TABLE {table}")
                 print(f"{table} dropped.")
-        
     
 def insert_new_manager(name, salary, password, startDate, jobTitle):
     with connection:
         with connection.cursor() as cursor:
             cursor.execute("""
-                 CREATE TABLE IF NOT EXISTS employees (
+                CREATE TABLE IF NOT EXISTS employees (
                     eid         SERIAL PRIMARY KEY,
                     name        VARCHAR(20),
                     salary      INTEGER,

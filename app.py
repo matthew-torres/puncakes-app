@@ -7,23 +7,31 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.post("/employee_signup")
+@app.route("/employee_signup", methods=["POST", "GET"])
 def employee_signup():
     data = request.get_json()
-    # TODO: add check box in frontend to determine if manager or staff
-    if (data["employee_type"] == "manager"):
-        db.insert_new_manager(data["name"], data["salary"], data["password"], data["startDate"], data["jobTitle"])
-        return redirect("/") # placeholder redirect after successful account creation
-    elif data["employee_type"] == "staff":
-        db.insert_new_staff(data["name"], data["salary"], data["password"], data["startDate"], data["jobTitle"])
-        return redirect("/")
+    if request.method == 'POST':
+        # TODO: add check box in frontend to determine if manager or staff
+        if (data["employee_type"] == "manager"):
+            db.insert_new_manager(data["name"], data["salary"], data["password"], data["startDate"], data["jobTitle"])
+            return redirect("/") # placeholder redirect after successful account creation
+        elif data["employee_type"] == "staff":
+            db.insert_new_staff(data["name"], data["salary"], data["password"], data["startDate"], data["jobTitle"])
+            return redirect("/")
 
-    return render_template("employee_signup.html", error="Unable to create new employee.") # place holder
+        return render_template("employee_signup.html", error="Unable to create new employee.") # place holder
+    else:
+        render_template('signup.html')
 
-@app.post("/customer_signup")
+@app.route("/customer_signup", methods=["POST", "GET"])
 def customer_signup():
     data = request.get_json()
-    db.insert_new_customer(data["name"], data["password"], data["email"], data["phoneNum"], data["street"], data["city"], data["state"], data["zip"])
+    if request.method == "POST":
+        db.insert_new_customer(data["name"], data["password"], data["email"], data["phoneNum"], data["street"], data["city"], data["state"], data["zip"])
+        return redirect("/")
+    else:
+        return render_template("signup.html")
+    
 
 @app.get("/aboutus")
 def get_about_us():
