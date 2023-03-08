@@ -13,7 +13,7 @@ def create_tables():
             cursor.execute(""" 
                 CREATE TABLE IF NOT EXISTS employees (
                     eid         SERIAL PRIMARY KEY,
-                    name        VARCHAR(20),
+                    name "      VARCHAR(20),
                     salary      INTEGER,
                     password    VARCHAR(15),
                     startDate   DATE
@@ -21,13 +21,13 @@ def create_tables():
                 CREATE TABLE IF NOT EXISTS manager (
                     eid         SERIAL PRIMARY KEY,
                     jobTitle    VARCHAR(20),
-                    FOREIGN KEY (eid) REFERENCES employees(eid)
+                    FOREIGN KEY (eid) REFERENCES employees(eid) ON DELETE CASCADE
                 );
 
                 CREATE TABLE IF NOT EXISTS staff (
                     eid         SERIAL REFERENCES employees,
                     jobTitle    VARCHAR(20),
-                    FOREIGN KEY (eid) REFERENCES employees(eid)
+                    FOREIGN KEY (eid) REFERENCES employees(eid) ON DELETE CASCADE
                 );
 
                 CREATE TABLE IF NOT EXISTS customers (
@@ -58,10 +58,10 @@ def insert_new_manager(name, salary, password, startDate, jobTitle):
                 CREATE TABLE IF NOT EXISTS  manager (
                     eid         SERIAL PRIMARY KEY,
                     jobTitle    VARCHAR(20),
-                    FOREIGN KEY (eid) REFERENCES employees(eid)
+                    FOREIGN KEY (eid) REFERENCES employees(eid) ON DELETE CASCADE
                 );
                 WITH e as (INSERT INTO employees(name, salary, password, startDate) 
-                VALUES (%s, %d, %s, %s)
+                VALUES (%s, %s, %s, %s)
                 RETURNING eid)
                 INSERT INTO manager(eid, jobTitle) SELECT e.eid, %s  as jobTitle FROM e;
             """, (name, salary, password, startDate, jobTitle,))
@@ -80,10 +80,10 @@ def insert_new_staff(name, salary, password, startDate, jobTitle):
                 CREATE TABLE IF NOT EXISTS  staff (
                     eid         SERIAL PRIMARY KEY,
                     jobTitle    VARCHAR(20),
-                    FOREIGN KEY (eid) REFERENCES employees(eid)
+                    FOREIGN KEY (eid) REFERENCES employees(eid) ON DELETE CASCADE
                 );
                 WITH e as (INSERT INTO employees(name, salary, password, startDate) 
-                VALUES (%s, %d, %s, %s) 
+                VALUES (%s, %s, %s, %s) 
                 RETURNING eid)
                 INSERT INTO staff(eid, jobTitle) SELECT e.eid, %s as jobTitle FROM e;
             """, (name, salary, password, startDate, jobTitle,))
@@ -91,7 +91,7 @@ def insert_new_staff(name, salary, password, startDate, jobTitle):
 def insert_new_customer(name, password, email, phone_num, street, city, state, zip):
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute(f""" 
+            cursor.execute(""" 
                 CREATE TABLE IF NOT EXISTS customers (
                     cid         SERIAL PRIMARY KEY,
                     name        VARCHAR(20),
