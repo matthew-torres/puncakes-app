@@ -9,8 +9,8 @@ def home():
 
 @app.route("/employee_signup", methods=["POST", "GET"])
 def employee_signup():
-    data = request.get_json()
     if request.method == 'POST':
+        data = request.get_json()
         # TODO: add check box in frontend to determine if manager or staff
         if (data["employee_type"] == "manager"):
             db.insert_new_manager(data["name"], data["salary"], data["password"], data["startDate"], data["jobTitle"])
@@ -25,12 +25,12 @@ def employee_signup():
 
 @app.route("/customer_signup", methods=["POST", "GET"])
 def customer_signup():
-    data = request.get_json()
     if request.method == "POST":
+        data = request.get_json()
         db.insert_new_customer(data["name"], data["password"], data["email"], data["phoneNum"], data["street"], data["city"], data["state"], data["zip"])
         return redirect("/")
     else:
-        return render_template("signup.html")
+        return render_template("about.html")
     
 
 @app.get("/aboutus")
