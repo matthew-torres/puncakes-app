@@ -21,7 +21,7 @@ def employee_signup():
 
         return render_template("employee_signup.html", error="Unable to create new employee.") # place holder
     else:
-        render_template('signup.html')
+        return render_template('signup.html')
 
 @app.route("/customer_signup", methods=["POST", "GET"])
 def customer_signup():
