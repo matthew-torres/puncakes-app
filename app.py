@@ -32,7 +32,6 @@ def customer_signup():
     else:
         return render_template("about.html")
     
-
 @app.get("/aboutus")
 def get_about_us():
     return render_template("about.html") # place holder
