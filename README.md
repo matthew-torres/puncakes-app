@@ -1,4 +1,4 @@
-# Project setup
+# Project setup Puncakes
 
 Mac Commands:
 1. Setup Virtual Environment
