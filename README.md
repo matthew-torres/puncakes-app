@@ -1,5 +1,7 @@
 # Project setup
 # testing push and pull
+
+# testing push and pull #2
 Mac Commands:
 1. Setup Virtual Environment
     - python3 -m venv venv
