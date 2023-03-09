@@ -2,7 +2,7 @@ import db
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
-
+# william
 @app.route("/")
 def home():
     return render_template("index.html")
