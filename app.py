@@ -43,8 +43,7 @@ def get_faq():
 @app.get("/user/employee/<eid>")
 def get_employee_page(eid):
     employee = db.select_employee_by_eid(eid)
-    print(employee)
-    return redirect('/') # placeholder
+    return render_template("employeeprofile.html", fname=employee[1], jobTitle=employee[6], salary=employee[3])
 
 @app.get("/user/customer/<cid>")
 def get_customer_page():
@@ -52,6 +51,8 @@ def get_customer_page():
 
 @app.get("/products/")
 def get_product_page():
-    pass
+    print("hit")
+    products = db.select_all_products()
+    return render_template("list_products.html", products=products)
 
 

@@ -178,7 +178,32 @@ def insert_new_customer(data: any) -> None:
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
             """, (data['name'], data['phoneNum'], data['password'], data['email'], data['street'], data['city'], data['state'], data['zip'],))
 
-def select_employee_by_eid(eid: int):
+def insert_new_prodcut(data: any) -> None:
+    '''
+    Inserts new product into products table
+
+    Parameters:
+        data: json object containing form data from products.html
+    Returns:
+        None
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(""" 
+                CREATE TABLE IF NOT EXISTS products (
+                pid             SERIAL PRIMARY KEY NOT NULL,
+                name            varchar(50) NOT NULL,
+                qtyStock        INTEGER NOT NULL,
+                expireDate      DATE NOT NULL,
+                price           NUMERIC(5,2),
+                nutritionFacts  VARCHAR(1000) NOT NULL,
+                description     VARCHAR(1000)
+            );
+                INSERT INTO products(name, qtyStock, exireDate, price, nutritionFacts, description) 
+                VALUES(%s, %s, %s, %s, %s, %s);
+            """, (data['name'], data['qtyStock'], data['expireDate'], data['price'], data['nutritionFacts'], data['description'],))
+
+def select_employee_by_eid(eid: int) -> tuple:
     '''
     Parameters:
         eid: int
@@ -193,7 +218,7 @@ def select_employee_by_eid(eid: int):
             employee = cursor.fetchone()
             return employee
         
-def select_employee_by_lname(lname: str):
+def select_employee_by_lname(lname: str) -> tuple:
     '''
     Parameters:
         lname: str of last name
@@ -208,7 +233,7 @@ def select_employee_by_lname(lname: str):
             employee = cursor.fetchone()
             return employee
         
-def select_prouduct_by_pid(pid: int):
+def select_prouduct_by_pid(pid: int) -> tuple:
     '''
     Parameters:
         pid: int
@@ -223,7 +248,7 @@ def select_prouduct_by_pid(pid: int):
             product = cursor.fetchone()
             return product
         
-def select_prouduct_by_name(name: str):
+def select_prouduct_by_name(name: str) -> tuple:
     '''
     Parameters:
         name: name of product
@@ -238,7 +263,7 @@ def select_prouduct_by_name(name: str):
             product = cursor.fetchone()
             return product
         
-def select_all_products():
+def select_all_products() -> list[tuple]:
     '''
     Parameters:
         None
