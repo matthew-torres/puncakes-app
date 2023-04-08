@@ -51,7 +51,6 @@ def get_customer_page():
 
 @app.get("/products/")
 def get_product_page():
-    print("hit")
     products = db.select_all_products()
     return render_template("list_products.html", products=products)
 
