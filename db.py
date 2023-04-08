@@ -233,6 +233,22 @@ def select_employee_by_lname(lname: str) -> tuple:
             employee = cursor.fetchone()
             return employee
         
+def select_employee_by_uname_pass(email: str, password: str) -> tuple:
+    '''
+    Parameters:
+        username: username string for user wanting to sign in
+        password: plaintext password for user who wants to sign in 
+    Returns:
+        user: tuple of selected user
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM employees WHERE email = %s AND password = %s",
+                    (email, password,))
+            user = cursor.fetchone()
+            return user
+        
 def select_prouduct_by_pid(pid: int) -> tuple:
     '''
     Parameters:
@@ -276,7 +292,22 @@ def select_all_products() -> list[tuple]:
                     "SELECT * FROM products")
             product = cursor.fetchall()
             return product
-        
+
+def select_customer_by_uname_pass(email: str, password: str) -> tuple:
+    '''
+    Parameters:
+        username: username string for user wanting to sign in
+        password: plaintext password for user who wants to sign in 
+    Returns:
+        user: tuple of selected user
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM customers WHERE email = %s AND password = %s",
+                    (email, password,))
+            user = cursor.fetchone()
+            return user
 
             
             

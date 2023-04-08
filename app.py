@@ -1,7 +1,11 @@
 import db
-from flask import Flask, render_template, request, redirect, jsonify
+import os
+from flask import Flask, render_template, request, redirect, jsonify, session
+from controllers import user_managerment
+
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("API_SECRET")
 
 @app.route("/")
 def home():
@@ -31,6 +35,38 @@ def customer_signup():
         return redirect("/")
     else:
         return render_template("signup.html")
+
+# TODO: fix rendering on failed login 
+@app.route("/login", methods=["POST", "GET"])
+def customer_login():
+    if request.method == "POST":
+        data = request.get_json()
+        user = db.select_customer_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
+        if user: # check if exists
+            user_managerment.create_session(user) # create new session
+            return redirect(f"/user/customer/{session['id']}") # redirect to their customer page
+        else:
+            return render_template("login.html", msg='User does not exist.')
+    else:
+        return render_template("login.html", msg='')
+
+@app.route("/employee_login", methods=["POST", "GET"])
+def employee_login():
+    if request.method == "POST":
+        data = request.get_json()
+        user = db.select_employee_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
+        if user: # check if exists
+            user_managerment.create_session(user) # create new session
+            return redirect(f"/user/employee/{session['id']}") # redirect to their customer page
+        else:
+            return render_template("employee_login.html", msg='User does not exist.')
+    else:
+        return render_template("employee_login.html", msg='')
+    
+@app.route("/logout")
+def logout():
+    session.pop('id', None)
+    return redirect('/')
     
 @app.get("/aboutus")
 def get_about_us():
@@ -40,14 +76,16 @@ def get_about_us():
 def get_faq():
     return render_template("faq.html") # place holder
 
+# TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/employee/<eid>")
 def get_employee_page(eid):
     employee = db.select_employee_by_eid(eid)
     return render_template("employeeprofile.html", fname=employee[1], jobTitle=employee[6], salary=employee[3])
 
+# TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/customer/<cid>")
-def get_customer_page():
-    pass
+def get_customer_page(cid):
+    return render_template("about.html")
 
 @app.get("/products/")
 def get_product_page():
