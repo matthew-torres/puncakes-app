@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <form method="POST" onsubmit="submitForm(event)">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="Login">
+    </form>
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        const object = {};
+        formData.forEach((value, key) => {
+          object[key] = value;
+        });
+        const json = JSON.stringify(object);
+        fetch('/employee_login', {
+          method: 'POST',
+          body: json,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          console.log(response);
+          // Handle response
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle error
+        });
+      }
+    </script>
+  </body>
+</html>
