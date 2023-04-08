@@ -1,4 +1,4 @@
-import os
+import os, json
 import psycopg2
 from dotenv import load_dotenv
 
@@ -177,3 +177,83 @@ def insert_new_customer(data: any) -> None:
                 INSERT INTO customers(name, phoneNum, password, email, street, city, state, zip) 
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
             """, (data['name'], data['phoneNum'], data['password'], data['email'], data['street'], data['city'], data['state'], data['zip'],))
+
+def select_employee_by_eid(eid: int):
+    '''
+    Parameters:
+        eid: int
+    Returns:
+        employee: tuple of all attributes from employees table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM employees WHERE eid = %s",
+                    (eid,),)
+            employee = cursor.fetchone()
+            return employee
+        
+def select_employee_by_lname(lname: str):
+    '''
+    Parameters:
+        lname: str of last name
+    Returns:
+        employee: tuple of all attributes from employees table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM employees WHERE lname = %s",
+                    (lname,),)
+            employee = cursor.fetchone()
+            return employee
+        
+def select_prouduct_by_pid(pid: int):
+    '''
+    Parameters:
+        pid: int
+    Returns:
+        product: tuple of all attributes from products table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM products WHERE pid = %s",
+                    (pid,),)
+            product = cursor.fetchone()
+            return product
+        
+def select_prouduct_by_name(name: str):
+    '''
+    Parameters:
+        name: name of product
+    Returns:
+        product: tuple of all attributes from products table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM products WHERE name = %s",
+                    (name,),)
+            product = cursor.fetchone()
+            return product
+        
+def select_all_products():
+    '''
+    Parameters:
+        None
+    Returns:
+        product: list of tuples of all attributes from products table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM products WHERE")
+            product = cursor.fetchall()
+            return product
+        
+
+            
+            
+
+    

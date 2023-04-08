@@ -41,8 +41,10 @@ def get_faq():
     return render_template("faq.html") # place holder
 
 @app.get("/user/employee/<eid>")
-def get_employee_page():
-    pass
+def get_employee_page(eid):
+    employee = db.select_employee_by_eid(eid)
+    print(employee)
+    return redirect('/') # placeholder
 
 @app.get("/user/customer/<cid>")
 def get_customer_page():
