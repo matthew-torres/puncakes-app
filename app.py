@@ -65,7 +65,7 @@ def employee_login():
     
 @app.route("/logout")
 def logout():
-    session.pop('id', None)
+    user_managerment.user_logout()
     return redirect('/')
     
 @app.get("/aboutus")
