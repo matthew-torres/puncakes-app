@@ -248,7 +248,7 @@ def select_all_products():
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM products WHERE")
+                    "SELECT * FROM products")
             product = cursor.fetchall()
             return product
         
