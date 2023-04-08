@@ -1,4 +1,4 @@
-import os
+import os, json
 import psycopg2
 from dotenv import load_dotenv
 
@@ -121,67 +121,164 @@ def __drop_table__(table: str):
                 print(f"{table} dropped.")
 
 
-def insert_new_manager(name, salary, password, startDate, jobTitle):
+def insert_new_employee(data: any, manager: int) -> None:
+    '''
+    Inserts new employee into the employees table
+    Parameters:
+        data: json object containing form data from employee_signup.html
+        manager: bool value to denote whether insertion is classified as a manager
+    Returns:
+        None
+    '''
     with connection:
         with connection.cursor() as cursor:
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS employees (
-                    eid         SERIAL PRIMARY KEY,
-                    name        VARCHAR(20),
-                    salary      INTEGER,
-                    password    VARCHAR(15),
-                    startDate   DATE
-                );
-                CREATE TABLE IF NOT EXISTS  manager (
-                    eid         SERIAL PRIMARY KEY,
-                    jobTitle    VARCHAR(20),
-                    FOREIGN KEY (eid) REFERENCES employees(eid) ON DELETE CASCADE
-                );
-                WITH e as (INSERT INTO employees(name, salary, password, startDate) 
-                VALUES (%s, %s, %s, %s)
-                RETURNING eid)
-                INSERT INTO manager(eid, jobTitle) SELECT e.eid, %s  as jobTitle FROM e;
-            """, (name, salary, password, startDate, jobTitle,))
+                eid             SERIAL PRIMARY KEY NOT NULL,
+                fname           VARCHAR(20),
+                lname           VARCHAR(25) NOT NULL,
+                salary          NUMERIC(8,2),
+                email           VARCHAR(20) NOT NULL,
+                phone_number    VARCHAR(20),
+                jobTitle        VARCHAR(20),
+                password        VARCHAR(15),
+                startDate       DATE NOT NULL,
+                manager         INTEGER,
+                CONSTRAINT emp_salary_min CHECK (salary > 0),
+                CONSTRAINT emp_email_uk UNIQUE (email)
+            );
+                INSERT INTO employees(fname, lname, salary, email, phone_number, jobTitle, password, startDate, manager) 
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);
+            """, (data['fname'], data['lname'], data['salary'], data['email'], data['phone_number'], data['jobTitle'], data['password'], data['startDate'], manager,))
 
+def insert_new_customer(data: any) -> None:
+    '''
+    Inserts new employee into employees table
 
-def insert_new_staff(name, salary, password, startDate, jobTitle):
-    with connection:
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                 CREATE TABLE IF NOT EXISTS employees (
-                    eid         SERIAL PRIMARY KEY,
-                    name        VARCHAR(20),
-                    salary      INTEGER,
-                    password    VARCHAR(15),
-                    startDate   DATE
-                );
-                CREATE TABLE IF NOT EXISTS  staff (
-                    eid         SERIAL PRIMARY KEY,
-                    jobTitle    VARCHAR(20),
-                    FOREIGN KEY (eid) REFERENCES employees(eid) ON DELETE CASCADE
-                );
-                WITH e as (INSERT INTO employees(name, salary, password, startDate) 
-                VALUES (%s, %s, %s, %s) 
-                RETURNING eid)
-                INSERT INTO staff(eid, jobTitle) SELECT e.eid, %s as jobTitle FROM e;
-            """, (name, salary, password, startDate, jobTitle,))
-
-
-def insert_new_customer(name, password, email, phone_num, street, city, state, zip):
+    Parameters:
+        data: json object containing form data from signup.html
+    Returns:
+        None
+    '''
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(""" 
                 CREATE TABLE IF NOT EXISTS customers (
-                    cid         SERIAL PRIMARY KEY,
-                    name        VARCHAR(20),
-                    password    VARCHAR(20),
-                    email       VARCHAR(20),
-                    phoneNum    CHAR(10),
-                    street      VARCHAR(20),
-                    city        VARCHAR(15),
-                    state       CHAR(2),
-                    zip         CHAR(5)    
-                );
-                INSERT INTO customers(name, password, email, phoneNum, street, city, state, zip) 
+                cid             SERIAL PRIMARY KEY NOT NULL,
+                name            VARCHAR(100) NOT NULL,
+                phoneNum        CHAR(10),
+                password        VARCHAR(20),
+                email           VARCHAR(20) NOT NULL,
+                street          VARCHAR(20),
+                city            VARCHAR(15),
+                state           CHAR(2),
+                zip             CHAR(5)
+            );
+                INSERT INTO customers(name, phoneNum, password, email, street, city, state, zip) 
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
-            """, (name, password, email, phone_num, street, city, state, zip,))
+            """, (data['name'], data['phoneNum'], data['password'], data['email'], data['street'], data['city'], data['state'], data['zip'],))
+
+def insert_new_prodcut(data: any) -> None:
+    '''
+    Inserts new product into products table
+
+    Parameters:
+        data: json object containing form data from products.html
+    Returns:
+        None
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(""" 
+                CREATE TABLE IF NOT EXISTS products (
+                pid             SERIAL PRIMARY KEY NOT NULL,
+                name            varchar(50) NOT NULL,
+                qtyStock        INTEGER NOT NULL,
+                expireDate      DATE NOT NULL,
+                price           NUMERIC(5,2),
+                nutritionFacts  VARCHAR(1000) NOT NULL,
+                description     VARCHAR(1000)
+            );
+                INSERT INTO products(name, qtyStock, exireDate, price, nutritionFacts, description) 
+                VALUES(%s, %s, %s, %s, %s, %s);
+            """, (data['name'], data['qtyStock'], data['expireDate'], data['price'], data['nutritionFacts'], data['description'],))
+
+def select_employee_by_eid(eid: int) -> tuple:
+    '''
+    Parameters:
+        eid: int
+    Returns:
+        employee: tuple of all attributes from employees table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM employees WHERE eid = %s",
+                    (eid,),)
+            employee = cursor.fetchone()
+            return employee
+        
+def select_employee_by_lname(lname: str) -> tuple:
+    '''
+    Parameters:
+        lname: str of last name
+    Returns:
+        employee: tuple of all attributes from employees table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM employees WHERE lname = %s",
+                    (lname,),)
+            employee = cursor.fetchone()
+            return employee
+        
+def select_prouduct_by_pid(pid: int) -> tuple:
+    '''
+    Parameters:
+        pid: int
+    Returns:
+        product: tuple of all attributes from products table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM products WHERE pid = %s",
+                    (pid,),)
+            product = cursor.fetchone()
+            return product
+        
+def select_prouduct_by_name(name: str) -> tuple:
+    '''
+    Parameters:
+        name: name of product
+    Returns:
+        product: tuple of all attributes from products table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM products WHERE name = %s",
+                    (name,),)
+            product = cursor.fetchone()
+            return product
+        
+def select_all_products() -> list[tuple]:
+    '''
+    Parameters:
+        None
+    Returns:
+        product: list of tuples of all attributes from products table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM products")
+            product = cursor.fetchall()
+            return product
+        
+
+            
+            
+
+    
