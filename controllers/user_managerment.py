@@ -1,6 +1,6 @@
 from flask import session
 
-def create_session(user: tuple, status):
+def create_session(user: tuple, status=False):
             session['loggedin'] = True
             session['id'] = user[0] # index of cid
             session['username'] = user[1] # index of customer name in tuple

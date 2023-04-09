@@ -9,7 +9,10 @@ app.secret_key = os.environ.get("API_SECRET")
 
 @app.route("/")
 def home():
-    return render_template("index.html", user_type=session['employee'])
+    try:
+        return render_template("index.html", user_type=session['employee'], user_id=session['id'])
+    except:
+        return render_template("index.html", user_type=False, user_id=None)
 
 @app.route("/employee_signup", methods=["POST", "GET"])
 def employee_signup():
@@ -44,6 +47,7 @@ def customer_login():
         user = db.select_customer_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
         if user: # check if exists
             user_managerment.create_session(user, False) # create new session
+            print(f'User {session["id"]} has loggin in.')
             return redirect(f"/user/customer/{session['id']}") # redirect to their customer page
         else:
             return render_template("login.html", msg='User does not exist.')
@@ -57,6 +61,7 @@ def employee_login():
         user = db.select_employee_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
         if user: # check if exists
             user_managerment.create_session(user, True) # create new session
+            print(f'Employee {session["id"]} has loggin in.')
             return redirect(f"/user/employee/{session['id']}") # redirect to their customer page
         else:
             return render_template("employee_login.html", msg='User does not exist.')
@@ -65,6 +70,7 @@ def employee_login():
     
 @app.route("/logout")
 def logout():
+    print(f'User {session["id"]} has loggin in.')
     user_managerment.user_logout()
     return redirect('/')
 
