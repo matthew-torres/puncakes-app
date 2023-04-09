@@ -12,6 +12,9 @@
       <li><a href="/logout">Logout</a></li>
       <li><a href="/employee_signup">Employee Signup</a></li>
       <li><a href="/employee_login">Employee Login</a></li>
+      {% if user_type == true %}
+        <li><a href="/orders">Orders</a></li>
+      {% endif %}
     </ul>
   </body>
 </html>

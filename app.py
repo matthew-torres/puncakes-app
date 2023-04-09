@@ -9,7 +9,7 @@ app.secret_key = os.environ.get("API_SECRET")
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", user_type=session['employee'])
 
 @app.route("/employee_signup", methods=["POST", "GET"])
 def employee_signup():
@@ -67,15 +67,15 @@ def employee_login():
 def logout():
     user_managerment.user_logout()
     return redirect('/')
+
+@app.get("/orders")
+def get_all_orders():
+    if not session["employee"]:
+        return render_template("accessdenied.html")
+    else:
+        orders = db.select_all_orders_and_status()
+        return render_template("list_orders.html", orders=orders)
     
-@app.get("/aboutus")
-def get_about_us():
-    return render_template("about.html") # place holder
-
-@app.get("/faq")
-def get_faq():
-    return render_template("faq.html") # place holder
-
 # TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/employee/<eid>")
 def get_employee_page(eid):
@@ -85,11 +85,24 @@ def get_employee_page(eid):
 # TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/customer/<cid>")
 def get_customer_page(cid):
-    return render_template("about.html")
+    return render_template("about.html") # place holder
 
 @app.get("/products/")
-def get_product_page():
+def get_products_page():
     products = db.select_all_products()
     return render_template("list_products.html", products=products)
+
+@app.route("/product/<pid>")
+def get_product_page(pid):
+    product = db.select_product_by_pid(pid)
+    return render_template("product.html", product=product)
+
+@app.get("/aboutus")
+def get_about_us():
+    return render_template("about.html") # place holder
+
+@app.get("/faq")
+def get_faq():
+    return render_template("faq.html") # place holder
 
 
