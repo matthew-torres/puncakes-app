@@ -9,7 +9,10 @@ app.secret_key = os.environ.get("API_SECRET")
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    try:
+        return render_template("index.html", user_type=session['employee'], user_id=session['id'])
+    except:
+        return render_template("index.html", user_type=False, user_id=None)
 
 @app.route("/employee_signup", methods=["POST", "GET"])
 def employee_signup():
@@ -44,6 +47,7 @@ def customer_login():
         user = db.select_customer_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
         if user: # check if exists
             user_managerment.create_session(user, False) # create new session
+            print(f'User {session["id"]} has loggin in.')
             return redirect(f"/user/customer/{session['id']}") # redirect to their customer page
         else:
             return render_template("login.html", msg='User does not exist.')
@@ -57,6 +61,7 @@ def employee_login():
         user = db.select_employee_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
         if user: # check if exists
             user_managerment.create_session(user, True) # create new session
+            print(f'Employee {session["id"]} has loggin in.')
             return redirect(f"/user/employee/{session['id']}") # redirect to their customer page
         else:
             return render_template("employee_login.html", msg='User does not exist.')
@@ -65,17 +70,18 @@ def employee_login():
     
 @app.route("/logout")
 def logout():
+    print(f'User {session["id"]} has loggin in.')
     user_managerment.user_logout()
     return redirect('/')
+
+@app.get("/orders")
+def get_all_orders():
+    if not session["employee"]:
+        return render_template("accessdenied.html")
+    else:
+        orders = db.select_all_orders_and_status()
+        return render_template("list_orders.html", orders=orders)
     
-@app.get("/aboutus")
-def get_about_us():
-    return render_template("about.html") # place holder
-
-@app.get("/faq")
-def get_faq():
-    return render_template("faq.html") # place holder
-
 # TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/employee/<eid>")
 def get_employee_page(eid):
@@ -85,11 +91,35 @@ def get_employee_page(eid):
 # TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/customer/<cid>")
 def get_customer_page(cid):
-    return render_template("about.html")
+    return render_template("about.html") # place holder
 
 @app.get("/products/")
-def get_product_page():
+def get_products_page():
     products = db.select_all_products()
-    return render_template("list_products.html", products=products)
+    return render_template("list_products.html", products=products, user_type=session['employee'])
+
+@app.post("/add_to_cart")
+def add_to_cart():
+    data = request.get_json()
+    session['cart'] += data
+    return redirect(f"/my_cart/{session['id']}") # TODO: redirects do not seem to working at all after POST
+
+@app.get("/my_cart/<cid>")
+def get_customer_cart(cid):
+    print(session['cart'])
+    return render_template("faq.html") # place holder
+
+@app.route("/product/<pid>")
+def get_product_page(pid):
+    product = db.select_product_by_pid(pid)
+    return render_template("product.html", product=product)
+
+@app.get("/aboutus")
+def get_about_us():
+    return render_template("about.html") # place holder
+
+@app.get("/faq")
+def get_faq():
+    return render_template("faq.html") # place holder
 
 

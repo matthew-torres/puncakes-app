@@ -249,7 +249,7 @@ def select_employee_by_uname_pass(email: str, password: str) -> tuple:
             user = cursor.fetchone()
             return user
         
-def select_prouduct_by_pid(pid: int) -> tuple:
+def select_product_by_pid(pid: int) -> tuple:
     '''
     Parameters:
         pid: int
@@ -264,7 +264,7 @@ def select_prouduct_by_pid(pid: int) -> tuple:
             product = cursor.fetchone()
             return product
         
-def select_prouduct_by_name(name: str) -> tuple:
+def select_product_by_name(name: str) -> tuple:
     '''
     Parameters:
         name: name of product
@@ -309,6 +309,33 @@ def select_customer_by_uname_pass(email: str, password: str) -> tuple:
             user = cursor.fetchone()
             return user
 
+def select_all_orders() -> list[tuple]:
+    '''
+    Parameters:
+        None
+    Returns:
+        orders: list of tuples of all attributes from orders table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM orders")
+            orders = cursor.fetchall()
+            return orders
+        
+def select_all_orders_and_status() -> list[tuple]:
+    '''
+    Parameters:
+        None
+    Returns:
+        orders: list of tuples of all attributes from orders table
+    '''
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                    "SELECT * FROM orders JOIN orderStatus ON orders.orderStatus = orderStatus.osid")
+            orders = cursor.fetchall()
+            return orders
             
             
 
