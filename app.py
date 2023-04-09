@@ -1,6 +1,6 @@
 import db
 import os
-from flask import Flask, render_template, request, redirect, jsonify, session
+from flask import Flask, render_template, request, redirect, jsonify, session, url_for
 from controllers import user_managerment
 
 
@@ -48,7 +48,7 @@ def customer_login():
         if user: # check if exists
             user_managerment.create_session(user, False) # create new session
             print(f'User {session["id"]} has loggin in.')
-            return redirect(f"/user/customer/{session['id']}") # redirect to their customer page
+            return redirect('/') # redirect to their customer page
         else:
             return render_template("login.html", msg='User does not exist.')
     else:
@@ -70,7 +70,7 @@ def employee_login():
     
 @app.route("/logout")
 def logout():
-    print(f'User {session["id"]} has loggin in.')
+    print(f'User {session["id"]} has logged out.')
     user_managerment.user_logout()
     return redirect('/')
 
@@ -82,13 +82,11 @@ def get_all_orders():
         orders = db.select_all_orders_and_status()
         return render_template("list_orders.html", orders=orders)
     
-# TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/employee/<eid>")
 def get_employee_page(eid):
     employee = db.select_employee_by_eid(eid)
     return render_template("employeeprofile.html", fname=employee[1], jobTitle=employee[6], salary=employee[3])
 
-# TODO: fix issue where customer page is not rendered after sign in
 @app.get("/user/customer/<cid>")
 def get_customer_page(cid):
     return render_template("about.html") # place holder
@@ -102,12 +100,12 @@ def get_products_page():
 def add_to_cart():
     data = request.get_json()
     session['cart'] += data
-    return redirect(f"/my_cart/{session['id']}") # TODO: redirects do not seem to working at all after POST
+    return redirect(f"/")
 
-@app.get("/my_cart/<cid>")
-def get_customer_cart(cid):
+@app.get("/my_cart/")
+def get_customer_cart():
     print(session['cart'])
-    return render_template("faq.html") # place holder
+    return session['cart']
 
 @app.route("/product/<pid>")
 def get_product_page(pid):
