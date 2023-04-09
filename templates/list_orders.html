@@ -5,28 +5,33 @@
   </head>
   <body>
     <h1>Orders Catalog</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>OID</th>
-          <th>CID</th>
-          <th>Total Amount</th>
-          <th>Time Placed</th>
-          <th>Order Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for order in orders %}
-        <tr>
-          <td>{{ order[0] }}</td>
-          <td>{{ order[1] }}</td>
-          <td>{{ order[2] }}</td>
-          <td>{{ order[3] }}</td>
-          <td>{{ order[7] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <form action="/process_orders" method="POST">
+      <table>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>OID</th>
+            <th>CID</th>
+            <th>Total Amount</th>
+            <th>Time Placed</th>
+            <th>Order Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td><input type="checkbox" name="order_ids[]" value="{{ order[0] }}"></td>
+            <td>{{ order[0] }}</td>
+            <td>{{ order[1] }}</td>
+            <td>{{ order[2] }}</td>
+            <td>{{ order[3] }}</td>
+            <td>{{ order[7] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="submit" value="Process Selected Orders">
+    </form>
     <a href="/">Return to Home Page</a>
   </body>
 </html>

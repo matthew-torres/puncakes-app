@@ -90,7 +90,18 @@ def get_customer_page(cid):
 @app.get("/products/")
 def get_products_page():
     products = db.select_all_products()
-    return render_template("list_products.html", products=products)
+    return render_template("list_products.html", products=products, user_type=session['employee'])
+
+@app.post("/add_to_cart")
+def add_to_cart():
+    data = request.get_json()
+    session['cart'] += data
+    return redirect(f"/my_cart/{session['id']}") # TODO: redirects do not seem to working at all after POST
+
+@app.get("/my_cart/<cid>")
+def get_customer_cart(cid):
+    print(session['cart'])
+    return render_template("faq.html") # place holder
 
 @app.route("/product/<pid>")
 def get_product_page(pid):
