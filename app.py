@@ -2,7 +2,7 @@ import db
 import os
 from flask import Flask, render_template, request, redirect, jsonify, session, url_for
 from controllers import user_managerment
-
+from utils import utils
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("API_SECRET")
@@ -98,13 +98,16 @@ def get_products_page():
 
 @app.post("/add_to_cart")
 def add_to_cart():
+    item = list()
     data = request.get_json()
-    session['cart'] += data
+    item.append(data) # append the json object into item list
+    session['cart'] += item # concat item list with cart
     return redirect(f"/")
 
+#TODO: create a checkout page that decrements the qty in db
 @app.get("/my_cart/")
 def get_customer_cart():
-    print(session['cart'])
+    session['cart'] = utils.consolidate_cart(session['cart'])
     return session['cart']
 
 @app.route("/product/<pid>")

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <title>Product Information</title>
@@ -11,4 +11,64 @@
     <p><strong>Description:</strong> {{ product[6] }}</p>
     <a href="/products">Return to Product Catalog</a>
   </body>
+</html> -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Information</title>
+  </head>
+  <body>
+    <h1>{{ product[1] }}</h1>
+    <p><strong>Quantity:</strong> {{ product[2] }}</p>
+    <p><strong>Price:</strong> ${{ product[4] }}</p>
+    <p><strong>Nutritional Facts:</strong> {{ product[5] }}</p>
+    <p><strong>Description:</strong> {{ product[6] }}</p>
+    <form id="addToCartForm" onsubmit="submitForm(); return false;">
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" value="1"><br><br>
+      <button type="submit">Add to Cart</button>
+    </form>
+    <a href="/products">Return to Product Catalog</a>
+    <script>
+      function submitForm() {
+        // Get form data
+        const form = document.querySelector('#addToCartForm');
+        const formData = new FormData(form);
+        // Convert form data to object
+        const object = {};
+        formData.forEach((value, key) => {
+          if (key === "quantity") {
+            object[key] = parseInt(value);
+          } else {
+            object[key] = value;
+          }
+        });
+        // Add product information to object
+        object['id'] = "{{ product[0] }}";
+        // Convert object to JSON
+        const json = JSON.stringify(object);
+        // Send JSON data using fetch
+        fetch('/add_to_cart', {
+          method: 'POST',
+          body: json,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          console.log(response);
+          // Handle response
+          window.location.href = "/my_cart/";
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle error
+        });
+      }
+    </script>
+  </body>
 </html>
+
+
+
+
