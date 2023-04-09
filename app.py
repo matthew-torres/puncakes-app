@@ -1,6 +1,6 @@
-import db
 import os
 from flask import Flask, render_template, request, redirect, jsonify, session, url_for
+from db import db
 from controllers import user_managerment
 from utils import utils
 
