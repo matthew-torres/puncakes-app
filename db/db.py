@@ -332,11 +332,26 @@ def select_all_orders_and_status() -> list[tuple]:
     '''
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute(
-                    "SELECT * FROM orders JOIN orderStatus ON orders.orderStatus = orderStatus.osid")
+            cursor.execute("""
+                    CREATE OR REPLACE VIEW order_summary_view AS
+                    SELECT o.oid, o.cid, o.orderTotal, o.timePlaced, o.timeDone, s.status
+                    FROM orders o
+                    JOIN orderStatus s ON o.orderStatus = s.osid;
+
+                    SELECT * FROM order_summary_view;
+            """)
             orders = cursor.fetchall()
             return orders
             
-            
-
-    
+def update_order_status(oid):
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                    UPDATE orderStatus
+                    SET status = 'complete'
+                    WHERE osid = (
+                        SELECT orderStatus
+                        FROM orders
+                        WHERE oid = <insert_oid_value_here>
+                    ); """)
+    return True

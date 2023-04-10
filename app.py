@@ -74,7 +74,7 @@ def logout():
     user_managerment.user_logout()
     return redirect('/')
 
-@app.get("/orders")
+@app.route("/orders")
 def get_all_orders():
     if not session["employee"]:
         return render_template("accessdenied.html")
