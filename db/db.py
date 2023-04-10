@@ -343,7 +343,14 @@ def select_all_orders_and_status() -> list[tuple]:
             orders = cursor.fetchall()
             return orders
             
-def update_order_status(oid):
+def update_order_status(oid: int):
+    '''
+    Parameters: 
+        oid: order id for order being updated
+    Returns:
+        bool: true if query successful
+
+    '''
     with connection:
         with connection.cursor() as cursor:
             cursor.execute("""
