@@ -74,14 +74,19 @@ def logout():
     user_managerment.user_logout()
     return redirect('/')
 
-@app.get("/orders")
+@app.route("/orders")
 def get_all_orders():
     if not session["employee"]:
         return render_template("accessdenied.html")
     else:
         orders = db.select_all_orders_and_status()
         return render_template("list_orders.html", orders=orders)
-    
+
+@app.post("/process_orders")
+def process_orders():
+    utils.update_order_status(request.get_json())
+    return redirect('/')
+
 @app.get("/user/employee/<eid>")
 def get_employee_page(eid):
     employee = db.select_employee_by_eid(eid)

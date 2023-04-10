@@ -1,3 +1,4 @@
+from db import db
 
 def consolidate_cart(cart):
     '''
@@ -18,3 +19,15 @@ def consolidate_cart(cart):
         if not found:
             result.append(d)
     return result
+
+def update_order_status_completed(orders):
+    '''
+    iterates through list of orders to update their status to complete
+    Parameters:
+        orders: list of orders needing to be updated
+    Returns:
+        bool
+    '''
+    for order in orders:
+        db.update_order_status(order['oid'])
+    return True
