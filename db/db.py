@@ -178,7 +178,7 @@ def insert_new_customer(data: any) -> None:
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
             """, (data['name'], data['phoneNum'], data['password'], data['email'], data['street'], data['city'], data['state'], data['zip'],))
 
-def insert_new_prodcut(data: any) -> None:
+def insert_new_product(data: any) -> None:
     '''
     Inserts new product into products table
 
@@ -199,7 +199,7 @@ def insert_new_prodcut(data: any) -> None:
                 nutritionFacts  VARCHAR(1000) NOT NULL,
                 description     VARCHAR(1000)
             );
-                INSERT INTO products(name, qtyStock, exireDate, price, nutritionFacts, description) 
+                INSERT INTO products(name, qtyStock, expireDate, price, nutritionFacts, description) 
                 VALUES(%s, %s, %s, %s, %s, %s);
             """, (data['name'], data['qtyStock'], data['expireDate'], data['price'], data['nutritionFacts'], data['description'],))
 

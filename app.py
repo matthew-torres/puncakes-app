@@ -101,6 +101,15 @@ def get_products_page():
     products = db.select_all_products()
     return render_template("list_products.html", products=products, user_type=session['employee'])
 
+@app.route("/new_product", methods=["POST", "GET"])
+def new_product():
+    if request.method == "POST":
+        data = request.get_json()
+        db.insert_new_product(data)
+        return('/products')
+    else:
+        return render_template("newproduct.html")
+
 @app.post("/add_to_cart")
 def add_to_cart():
     item = list()

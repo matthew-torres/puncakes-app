@@ -27,6 +27,9 @@
         {% endfor %}
       </tbody>
     </table>
+    {% if user_type == true%}
+    <a href="/new_product">Add New Product</a>
+    {%endif%}
     <a href="/">Return to Home Page</a>
   </body>
 </html>
