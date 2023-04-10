@@ -348,10 +348,10 @@ def update_order_status(oid):
         with connection.cursor() as cursor:
             cursor.execute("""
                     UPDATE orderStatus
-                    SET status = 'complete'
+                    SET status = 'Complete'
                     WHERE osid = (
                         SELECT orderStatus
                         FROM orders
-                        WHERE oid = <insert_oid_value_here>
-                    ); """)
+                        WHERE oid = %s
+                    ); """, (oid,))
     return True
