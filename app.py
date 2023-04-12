@@ -46,11 +46,12 @@ def customer_login():
         data = request.get_json()
         user = db.select_customer_by_uname_pass(data["email"], data["password"]) # retrieve from customers db
         if user: # check if exists
+            print('dont print')
             user_managerment.create_session(user, False) # create new session
             print(f'User {session["id"]} has loggin in.')
             return redirect('/') # redirect to their customer page
         else:
-            return render_template("login.html", msg='User does not exist.')
+            return redirect('/login', code=404)
     else:
         return render_template("login.html", msg='')
 
@@ -64,7 +65,8 @@ def employee_login():
             print(f'Employee {session["id"]} has loggin in.')
             return redirect(f"/user/employee/{session['id']}") # redirect to their customer page
         else:
-            return render_template("employee_login.html", msg='User does not exist.')
+            return redirect('/employee_login', code=404)
+
     else:
         return render_template("employee_login.html", msg='')
     
