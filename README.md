@@ -8,7 +8,7 @@ Mac Commands:
 2. Install packages
     - pip install -r requirements.txt
 3. Create .env file to store secrets 
-    - Current secret is URL for ElephantSQL DB that is not checked into the Github repo
+    - Current secret is URL for ElephantSQL DB and Secret key for flask sessions that are not checked into the Github repo
 4. Use command 'flask run' to fire up development server
 
 Flask Documentation: https://flask.palletsprojects.com/en/2.2.x/quickstart/

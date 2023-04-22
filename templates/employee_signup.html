@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup Form</title>
+  </head>
+  <body>
+    <h2>Signup Form</h2>
+    <form method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" name="fname"><br><br>
+      <label for="lname">Last Name:</label>
+      <input type="text" id="lname" name="lname"><br><br>
+      <label for="jobTitle">Job Title:</label>
+      <input type="text" id="jobTitle" name="jobTitle"><br><br>
+      <label for="salary">Salary:</label>
+      <input type="number" id="salary" name="salary"><br><br>
+      <label for="phone_number">Phone Number:</label>
+      <input type="tel" id="phone_number" name="phone_number"><br><br>
+      <label for="startDate">Start Date:</label>
+      <input type="text" id="startDate" name="startDate"><br><br>
+      <label for="employee_type">Employee Type:</label>
+      <input type="checkbox" id="employee_type" name="employee_type" value="manager"> Manager<br>
+      <input type="checkbox" id="employee_type" name="employee_type" value="staff"> Staff<br>
+      <input type="button" value="Signup" onclick="submitForm()">
+    </form>
+    <script>
+      function submitForm() {
+        // Get form data
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        // Convert form data to object
+        const object = {};
+        formData.forEach((value, key) => {
+          object[key] = value;
+        });
+        // Convert object to JSON
+        const json = JSON.stringify(object);
+        // Send JSON data using fetch
+        fetch('/employee_signup', {
+          method: 'POST',
+          body: json,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          console.log(response);
+          // Handle response
+          window.location.href = "/orders";
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle error
+        });
+      }
+    </script>
+  </body>
+</html>
