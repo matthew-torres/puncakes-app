@@ -1,5 +1,6 @@
 from db import db
 
+
 def consolidate_cart(cart):
     '''
     Consolidate indentical items into one cart entry
@@ -19,6 +20,7 @@ def consolidate_cart(cart):
         if not found:
             result.append(d)
     return result
+
 
 def update_order_status_completed(orders):
     '''
