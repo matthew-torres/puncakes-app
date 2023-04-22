@@ -123,7 +123,7 @@ def get_products_page():
 
     if "id" in session:  # if session exists
         products_page = render_template(
-            "list_products.html", products=products, user_type=session.get("user_type"))
+            "list_products.html", products=products, user_type=session["employee"])
     else:  # else session does not exist
         products_page = render_template(
             "list_products.html", products=products, user_type=False)
