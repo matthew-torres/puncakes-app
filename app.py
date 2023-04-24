@@ -11,9 +11,9 @@ app.secret_key = os.environ.get("API_SECRET")
 @app.route("/")
 def home():
     try:
-        return render_template("index.html", user_type=session['employee'], user_id=session['id'])
+        return render_template("home.html", isEmployee=session['employee'], user_id=session['id'])
     except:
-        return render_template("index.html", user_type=False, user_id=None)
+        return render_template("home.html", isEmployee=False, user_id=None)
 
 
 @app.route("/employee_signup", methods=["POST", "GET"])
@@ -55,7 +55,8 @@ def customer_login():
         user = db.select_customer_by_uname_pass(
             data["email"], data["password"])  # retrieve from customers db
         if user:  # check if exists
-            user_managerment.create_session(user, False)  # create new session
+            user_managerment.create_session(
+                user)  # create new session
             print(f'User {session["id"]} has loggin in.')
             return redirect('/')  # redirect to their customer page
         else:
@@ -71,7 +72,13 @@ def employee_login():
         user = db.select_employee_by_uname_pass(
             data["email"], data["password"])  # retrieve from customers db
         if user:  # check if exists
-            user_managerment.create_session(user, True)  # create new session
+            if user[9] == 1:
+                print("Manager Logged In")
+                user_managerment.create_session(
+                    user, isEmployee=True, isManager=True)  # create new session
+            else:
+                user_managerment.create_session(
+                    user, isEmployee=True)  # create new session
             print(f'Employee {session["id"]} has loggin in.')
             # redirect to their customer page
             return redirect(f"/user/employee/{session['id']}")
@@ -91,7 +98,7 @@ def logout():
 
 @app.route("/orders")
 def get_all_orders():
-    if not session["employee"]:
+    if not session["isEmployee"]:
         return render_template("accessdenied.html")
     else:
         orders = db.select_all_orders_and_status()
@@ -123,10 +130,10 @@ def get_products_page():
 
     if "id" in session:  # if session exists
         products_page = render_template(
-            "list_products.html", products=products, user_type=session.get("user_type"))
+            "list_products.html", products=products, isEmployee=session["isEmployee"])
     else:  # else session does not exist
         products_page = render_template(
-            "list_products.html", products=products, user_type=False)
+            "list_products.html", products=products, isEmployee=False)
 
     return products_page
 

@@ -14,20 +14,24 @@
 <body>
   <h1>Welcome to Puncakes Bakery</h1>
   <ul>
+    <p>Products Link</p>
     <li><a href="/products">Products</a></li>
+    <br>
+    <p>Customer Links</p>
     <li><a href="/login">Login</a></li>
     <li><a href="/signup">Signup</a></li>
-    {% if "id" in session %}
-    <li><a href="/logout">Logout</a></li>
-    {% endif %}
+    <li><a href="/my_cart/">My cart</a></li>
+    <br>
+    <p>Employee Links</p>
     <li><a href="/employee_signup">Employee Signup</a></li>
     <li><a href="/employee_login">Employee Login</a></li>
-    {% if user_type == true %}
     <li><a href="/orders">Orders</a></li>
-    {% endif %}
-    {% if user_type == false and "id" in session %}
-    <li><a href="/my_cart/">My cart</a></li>
-    {% endif %}
+    <br>
+    <p>Logout Link</p>
+    <li><a href="/logout">Logout</a></li>
+    <br>
+    <p>About Us Link</p>
+    <li><a href="/aboutus">About Us</a></li>
   </ul>
 </body>
 
