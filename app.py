@@ -176,6 +176,11 @@ def get_about_us():
     return render_template("about.html")  # place holder
 
 
+@app.get("/contact")
+def get_contact():
+    return render_template("contact.html")  # place holder
+
+
 @app.get("/faq")
 def get_faq():
     return render_template("faq.html")  # place holder
