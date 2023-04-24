@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Product Catalog</title>
+</head>
+
+<body>
+  <h1>Product Catalog</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Ingredients</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td><a href="/product/{{ product[0] }}">{{ product[1] }}</a></td>
+        <td>{{ product[2] }}</td>
+        <td>${{ product[4] }}</td>
+        <td>{{ product[5] }}</td>
+        <td>{{ product[6] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if user_type == true%}
+  <a href="/new_product">Add New Product</a>
+  {%endif%}
+  <a href="/">Return to Home Page</a>
+</body>
+
+</html>
