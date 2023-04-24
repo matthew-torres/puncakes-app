@@ -1,4 +1,5 @@
-import os, json
+import os
+import json
 import psycopg2
 from dotenv import load_dotenv
 
@@ -151,6 +152,7 @@ def insert_new_employee(data: any, manager: int) -> None:
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);
             """, (data['fname'], data['lname'], data['salary'], data['email'], data['phone_number'], data['jobTitle'], data['password'], data['startDate'], manager,))
 
+
 def insert_new_customer(data: any) -> None:
     '''
     Inserts new employee into employees table
@@ -178,6 +180,7 @@ def insert_new_customer(data: any) -> None:
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s);
             """, (data['name'], data['phoneNum'], data['password'], data['email'], data['street'], data['city'], data['state'], data['zip'],))
 
+
 def insert_new_product(data: any) -> None:
     '''
     Inserts new product into products table
@@ -203,6 +206,7 @@ def insert_new_product(data: any) -> None:
                 VALUES(%s, %s, %s, %s, %s, %s);
             """, (data['name'], data['qtyStock'], data['expireDate'], data['price'], data['nutritionFacts'], data['description'],))
 
+
 def select_employee_by_eid(eid: int) -> tuple:
     '''
     Parameters:
@@ -213,11 +217,12 @@ def select_employee_by_eid(eid: int) -> tuple:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM employees WHERE eid = %s",
-                    (eid,),)
+                "SELECT * FROM employees WHERE eid = %s",
+                (eid,),)
             employee = cursor.fetchone()
             return employee
-        
+
+
 def select_employee_by_lname(lname: str) -> tuple:
     '''
     Parameters:
@@ -228,11 +233,12 @@ def select_employee_by_lname(lname: str) -> tuple:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM employees WHERE lname = %s",
-                    (lname,),)
+                "SELECT * FROM employees WHERE lname = %s",
+                (lname,),)
             employee = cursor.fetchone()
             return employee
-        
+
+
 def select_employee_by_uname_pass(email: str, password: str) -> tuple:
     '''
     Parameters:
@@ -244,11 +250,12 @@ def select_employee_by_uname_pass(email: str, password: str) -> tuple:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM employees WHERE email = %s AND password = %s",
-                    (email, password,))
+                "SELECT * FROM employees WHERE email = %s AND password = %s",
+                (email, password,))
             user = cursor.fetchone()
             return user
-        
+
+
 def select_product_by_pid(pid: int) -> tuple:
     '''
     Parameters:
@@ -259,11 +266,12 @@ def select_product_by_pid(pid: int) -> tuple:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM products WHERE pid = %s",
-                    (pid,),)
+                "SELECT * FROM products WHERE pid = %s",
+                (pid,),)
             product = cursor.fetchone()
             return product
-        
+
+
 def select_product_by_name(name: str) -> tuple:
     '''
     Parameters:
@@ -274,11 +282,12 @@ def select_product_by_name(name: str) -> tuple:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM products WHERE name = %s",
-                    (name,),)
+                "SELECT * FROM products WHERE name = %s",
+                (name,),)
             product = cursor.fetchone()
             return product
-        
+
+
 def select_all_products() -> list[tuple]:
     '''
     Parameters:
@@ -289,9 +298,10 @@ def select_all_products() -> list[tuple]:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM products")
+                "SELECT * FROM products")
             product = cursor.fetchall()
             return product
+
 
 def select_customer_by_uname_pass(email: str, password: str) -> tuple:
     '''
@@ -304,10 +314,11 @@ def select_customer_by_uname_pass(email: str, password: str) -> tuple:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM customers WHERE email = %s AND password = %s",
-                    (email, password,))
+                "SELECT * FROM customers WHERE email = %s AND password = %s",
+                (email, password,))
             user = cursor.fetchone()
             return user
+
 
 def select_all_orders() -> list[tuple]:
     '''
@@ -319,10 +330,11 @@ def select_all_orders() -> list[tuple]:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                    "SELECT * FROM orders")
+                "SELECT * FROM orders")
             orders = cursor.fetchall()
             return orders
-        
+
+
 def select_all_orders_and_status() -> list[tuple]:
     '''
     Parameters:
@@ -342,7 +354,8 @@ def select_all_orders_and_status() -> list[tuple]:
             """)
             orders = cursor.fetchall()
             return orders
-            
+
+
 def update_order_status(oid: int):
     '''
     Parameters: 

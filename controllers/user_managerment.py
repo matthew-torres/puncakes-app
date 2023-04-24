@@ -1,12 +1,15 @@
 from flask import session
 
-def create_session(user: tuple, status=False):
-            session['loggedin'] = True
-            session['id'] = user[0] # index of cid
-            session['username'] = user[1] # index of customer name in tuple
-            session['user'] = user
-            session['employee'] = status
-            session['cart'] = list()
+
+def create_session(user: tuple, isEmployee=False, isManager=True):
+    session['loggedin'] = True
+    session['id'] = user[0]  # index of cid
+    session['username'] = user[1]  # index of customer name in tuple
+    session['user'] = user
+    session['isEmployee'] = isEmployee
+    session['isManager'] = isManager
+    session['cart'] = list()
+
 
 def user_logout():
-        session.pop('id', None)
+    session.pop('id', None)
