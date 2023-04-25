@@ -6,7 +6,19 @@
 </head>
 
 <body>
-  <h1>Login</h1>
+  <header>
+    <h1>The Puncakes Bakery</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/aboutus">About Us</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+  <h2>Login</h2>
   {% if msg %}
   <p>{{ msg }}</p>
   {% endif %}
@@ -50,14 +62,6 @@
         });
     }
   </script>
-  <br>
-  <br>
-  <li><a href="/">Home</a></li>
-  <li><a href="/products">Products</a></li>
-  <li><a href="/aboutus">About Us</a></li>
-  <li><a href="/contact">Contact Us</a></li>
-  <li><a href="/faq">FAQ</a></li>
-  <br>
 </body>
 
 </html>

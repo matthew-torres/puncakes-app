@@ -9,16 +9,43 @@
 
 <body>
     <header>
-        <h1>My Cart</h1>
+        <h1>The Puncakes Bakery</h1>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/products">Products</a></li>
                 <li><a href="/aboutus">About Us</a></li>
                 <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/faq">FAQ</a></li>
             </ul>
         </nav>
+        <h2> My Cart </h2>
     </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Ingredients</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in my_cart %}
+                <tr>
+                    <td>product</td>
+                    <td>{{ product[2] }}</td>
+                    <td>${{ product[4] }}</td>
+                    <td>{{ product[5] }}</td>
+                    <td>{{ product[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 
     <main>
         <table>

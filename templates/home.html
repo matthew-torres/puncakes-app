@@ -8,59 +8,64 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-{% if "id" in session %}
-{% if "isEmployee" == true %}
-<h1>Welcome Employee to The Puncakes Bakery Website</h1>
-<p>Have a wonderful day working for Puncakes Incorperated</p>
-{% else %}
-<h1>Welcome to our The Puncakes Bakery</h1>
-<p>Thank you for visiting our website. Discover the best bakery products in town!</p>
-{% endif %}
-{% else %}
-<h1>Welcome to our The Puncakes Bakery</h1>
-<p>Thank you for visiting our website. Discover the best bakery products in town!</p>
-{% endif %}
+<header>
+  <img src="../images/loaf_logo_3.png" alt="Puncakes Logo" width="920" height="600">
 
-<img src="../images/loaf_logo_3.png" alt="Puncakes Logo" width="920" height="600">
-
-<ul>
 
   {% if "id" in session %}
-  <li><a href="/logout">Logout</a></li>
-  {% endif %}
-  {% if "isEmployee" != true and "id" in session %}
-  <li><a href="/my_cart/">My Cart</a></li>
-  {% endif %}
-  {% if "id" not in session %}
-  <li><a href="/signup">Customer Sign Up</a></li>
-  <li><a href="/login">Customer Login</a></li>
-  <br>
-  <li><a href="/employee_login">Employee Login</a></li>
-  <li><a href="/employee_signup">Career Application</a></li>
-  {% endif %}
-
-  <br>
-
   {% if "isEmployee" == true %}
-  <li><a href="/orders">Orders</a></li>
+  <h1>Welcome Employee to The Puncakes Bakery Website</h1>
+  <p>Have a wonderful day working for Puncakes Incorperated</p>
+  {% else %}
+  <h1>Welcome to our The Puncakes Bakery</h1>
+  <p>Thank you for visiting our website. Discover the best bakery products in town!</p>
+  {% endif %}
+  {% else %}
+  <h1>Welcome to our The Puncakes Bakery</h1>
+  <p>Thank you for visiting our website. Discover the best bakery products in town!</p>
   {% endif %}
 
-  {% if "isManager" == true %}
-  <p>WHAT</p>
-  <li><a href="/employee_signup">Employee Applications</a></li>
-  {% endif %}
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/aboutus">About Us</a></li>
+      <li><a href="/contact">Contact Us</a></li>
+      <li><a href="/faq">FAQ</a></li>
+    </ul>
+  </nav>
+</header>
 
 
+<body>
+  <ul>
 
-  <br>
-  <li><a href="/">Home</a></li>
-  <li><a href="/products">Products</a></li>
-  <li><a href="/aboutus">About Us</a></li>
-  <li><a href="/contact">Contact Us</a></li>
-  <li><a href="/faq">FAQ</a></li>
-  <br>
+    {% if "id" in session %}
+    <li><a href="/logout">Logout</a></li>
+    {% endif %}
+    {% if "isEmployee" != true and "id" in session %}
+    <li><a href="/my_cart/">My Cart</a></li>
+    {% endif %}
+    {% if "id" not in session %}
+    <li><a href="/signup">Customer Sign Up</a></li>
+    <li><a href="/login">Customer Login</a></li>
+    <br>
+    <li><a href="/employee_login">Employee Login</a></li>
+    <li><a href="/employee_signup">Career Application</a></li>
+    {% endif %}
 
-</ul>
+    <br>
+
+    {% if "isEmployee" == true %}
+    <li><a href="/orders">Orders</a></li>
+    {% endif %}
+
+    {% if "isManager" == true %}
+    <p>WHAT</p>
+    <li><a href="/employee_signup">Employee Applications</a></li>
+    {% endif %}
+
+  </ul>
 </body>
 
 </html>
