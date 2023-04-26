@@ -3,6 +3,19 @@
 
 <head>
   <title>Puncake's Product Catalog</title>
+  <style>
+    table, td, th {
+      border: 2px solid blue;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    table td:nth-child(2) { text-align: end; }
+    table td:nth-child(3) { text-align: end; }
+    body {
+        background-color: #e6ebef;
+    }
+  </style>
 </head>
 
 <body>
@@ -45,6 +58,9 @@
   {% if isEmployee == true %}
   <a href="/new_product">Add New Product</a>
   {%endif%}
+  <footer>
+      <p>&copy; Puncakes Bakery 2023</p>
+  </footer>
 </body>
 
 </html>

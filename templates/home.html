@@ -6,11 +6,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+  <img src="../images/loaf_logo_4.jpg" alt="Puncakes Logo" width="42" height="32">
+  <style>
+    body {
+        background-color: #e6ebef;
+    }
+    </style>
 </head>
 
 <header>
-  <img src="../images/loaf_logo_3.png" alt="Puncakes Logo" width="920" height="600">
-
 
   {% if "id" in session %}
   {% if "isEmployee" == true %}
@@ -66,6 +70,9 @@
     {% endif %}
 
   </ul>
+  <footer>
+      <p>&copy; Puncakes Bakery 2023</p>
+  </footer>
 </body>
 
 </html>

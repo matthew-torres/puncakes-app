@@ -162,8 +162,9 @@ def add_to_cart():
 @app.get("/my_cart/")
 def get_customer_cart():
     session['cart'] = utils.consolidate_cart(session['cart'])
-    return session['cart']
-#    return render_template("cart.html", cart=session['cart'])
+    total = utils.totalize_cart(session['cart'])
+    #return session['cart']
+    return render_template("cart.html", cart=session['cart'], total=total)
 
 
 @app.route("/product/<pid>")

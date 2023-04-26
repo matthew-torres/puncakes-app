@@ -109,6 +109,16 @@ def create_tables():
                 CONSTRAINT fk_reviews_customer FOREIGN KEY(cid) REFERENCES customers(cid),
                 CONSTRAINT fk_reviews_product FOREIGN KEY(pid) REFERENCES products(pid)
             );
+            
+            CREATE OR REPLACE FUNCTION get_all_products()
+            RETURNS SETOF RECORD AS
+            $$
+                BEGIN
+                  RETURN QUERY SELECT * FROM products;
+                END;
+            $$
+            LANGUAGE plpgsql;       
+                 
             """)
 
 
@@ -298,7 +308,8 @@ def select_all_products() -> list[tuple]:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                "SELECT * FROM products")
+                ## "SELECT * FROM products")
+                "SELECT * FROM get_all_products() f(pid INTEGER, name varchar(50), qtyStock INTEGER, expireDate DATE, price NUMERIC(5,2), nutritionFacts VARCHAR(1000), description VARCHAR(1000))")
             product = cursor.fetchall()
             return product
 

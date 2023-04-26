@@ -5,6 +5,20 @@
     <title>My Cart - Puncakes Bakery</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table, td, th {
+          width: 30em;
+          border: 1px solid black;
+        }
+        table {
+          border-collapse: collapse;
+        }
+        table td:nth-child(2) { text-align: end; }
+        table td:nth-child(3) { text-align: end; }
+        body {
+            background-color: #e6ebef;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,73 +33,29 @@
                 <li><a href="/faq">FAQ</a></li>
             </ul>
         </nav>
-        <h2> My Cart </h2>
     </header>
-
-    <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Ingredients</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product in my_cart %}
-                <tr>
-                    <td>product</td>
-                    <td>{{ product[2] }}</td>
-                    <td>${{ product[4] }}</td>
-                    <td>{{ product[5] }}</td>
-                    <td>{{ product[6] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </main>
-
-    <main>
-        <table>
+    <h2> My Cart </h2>
+    <table>
+        <thead>
             <tr>
                 <th>Product Name</th>
-                <th>Price</th>
                 <th>Quantity</th>
-                <th>Remove</th>
+                <th>Price</th>
             </tr>
+        </thead>
+        <tbody>
+            {% for product in cart %}
             <tr>
-                <td>Cupcake</td>
-                <td>$2.50</td>
-                <td>2</td>
-                <td><a href="#">Remove</a></td>
-            </tr>
-            <tr>
-                <td>Chocolate Cake</td>
-                <td>$30.00</td>
-                <td>1</td>
-                <td><a href="#">Remove</a></td>
-            </tr>
-            <tr>
-                <td colspan="3">Subtotal:</td>
-                <td>$35.00</td>
-            </tr>
-            <tr>
-                <td colspan="3">Tax (7.5%):</td>
-                <td>$2.63</td>
-            </tr>
-            <tr>
-                <td colspan="3">Total:</td>
-                <td>$37.63</td>
-            </tr>
-        </table>
+                <td>{{ product.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>${{ product.price }}</td>
 
-        <div class="buttons">
-            <a href="/products">Continue Shopping</a>
-            <a href="/checkout">Checkout</a>
-        </div>
-    </main>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <p>Total: ${{ total }}</p>
 
     <footer>
         <p>&copy; Puncakes Bakery 2023</p>
