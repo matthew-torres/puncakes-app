@@ -1,7 +1,7 @@
 from flask import session
 
 
-def create_session(user: tuple, isEmployee=False, isManager=True):
+def create_session(user: tuple, isEmployee=False, isManager=False):
     session['loggedin'] = True
     session['id'] = user[0]  # index of cid
     session['username'] = user[1]  # index of customer name in tuple

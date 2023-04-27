@@ -11,9 +11,9 @@ app.secret_key = os.environ.get("API_SECRET")
 @app.route("/")
 def home():
     try:
-        return render_template("home.html", isEmployee=session['employee'], user_id=session['id'])
+        return render_template("home.html", isEmployee=session['isEmployee'], user_id=session['id'], isManager=session['isManager'])
     except:
-        return render_template("home.html", isEmployee=False, user_id=None)
+        return render_template("home.html", isEmployee=False, isManager=False, user_id=None)
 
 
 @app.route("/employee_signup", methods=["POST", "GET"])
@@ -56,7 +56,7 @@ def customer_login():
             data["email"], data["password"])  # retrieve from customers db
         if user:  # check if exists
             user_managerment.create_session(
-                user)  # create new session
+                user, isEmployee=False, isManager=False)  # create new session
             print(f'User {session["id"]} has loggin in.')
             return redirect('/')  # redirect to their customer page
         else:
@@ -71,6 +71,7 @@ def employee_login():
         data = request.get_json()
         user = db.select_employee_by_uname_pass(
             data["email"], data["password"])  # retrieve from customers db
+        print(user)
         if user:  # check if exists
             if user[9] == 1:
                 print("Manager Logged In")

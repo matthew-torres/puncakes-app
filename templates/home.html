@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-{% if "id" in session %}
-{% if "isEmployee" == true %}
+{% if not user_id %}
+{% if isEmployee == true %}
 <h1>Welcome Employee to The Puncakes Bakery Website</h1>
 <p>Have a wonderful day working for Puncakes Incorperated</p>
 {% else %}
@@ -25,13 +25,11 @@
 
 <ul>
 
-  {% if "id" in session %}
   <li><a href="/logout">Logout</a></li>
-  {% endif %}
-  {% if "isEmployee" != true and "id" in session %}
+  {% if not isEmployee %}
   <li><a href="/my_cart/">My Cart</a></li>
   {% endif %}
-  {% if "id" not in session %}
+  {% if not user_id %}
   <li><a href="/signup">Customer Sign Up</a></li>
   <li><a href="/login">Customer Login</a></li>
   <br>
@@ -43,11 +41,11 @@
 
   <li><a href="/products">Products</a></li>
 
-  {% if "isEmployee" == true %}
+  {% if isEmployee == true or isManager == true %}
   <li><a href="/orders">Orders</a></li>
   {% endif %}
 
-  {% if "isManager" == true %}
+  {% if isManager == true %}
   <p>WHAT</p>
   <li><a href="/employee_signup">Employee Applications</a></li>
   {% endif %}
