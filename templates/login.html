@@ -3,10 +3,24 @@
 
 <head>
   <title>Login Page</title>
+  <style>
+    body {
+      background-image: url("https://www.mashed.com/img/gallery/the-best-bakery-in-every-state/intro-1601499029.jpg");
+      background-size: cover;
+    }
+    .container {
+      width: 40%;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Login</h1>
+  <div class="container">
+    <h1>Login</h1>
   {% if msg %}
   <p>{{ msg }}</p>
   {% endif %}
@@ -17,7 +31,13 @@
     <input type="password" id="password" name="password"><br><br>
     <input type="submit" value="Login">
   </form>
-
+    <br>
+    	<a href="/">Home</a>
+    	<a href="/products">Products</a>
+        <a href="/aboutus">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/faq">FAQ</a>
+  </div>
   <script>
     function submitForm(event) {
       event.preventDefault();
@@ -27,6 +47,10 @@
       formData.forEach((value, key) => {
         object[key] = value;
       });
+	  if (!object.email || !object.password) {
+        alert("Missing field");
+        return;
+      }
       const json = JSON.stringify(object);
       fetch('/login', {
         method: 'POST',

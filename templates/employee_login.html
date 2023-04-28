@@ -3,9 +3,23 @@
 
 <head>
   <title>Login Page</title>
+  <style>
+    body {
+      background-image: url("https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1536/https://www.thimble.com/wp-content/uploads/2021/09/How-to-open-a-bakery-1536x1024.jpg");
+      background-size: cover;
+    }
+    .container {
+      width: 40%;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="container">
   <h1>Employee Login</h1>
   {% if message %}
   <p>{{ message }}</p>
@@ -17,6 +31,9 @@
     <input type="password" id="password" name="password"><br><br>
     <input type="submit" value="Login">
   </form>
+    <br>
+    <a href="/">Return to Home Page</a>
+  </div>
   <script>
     function submitForm(event) {
       event.preventDefault();
@@ -49,8 +66,5 @@
         });
     }
   </script>
-  <br>
-  <a href="/">Return to Home Page</a>
 </body>
-
 </html>

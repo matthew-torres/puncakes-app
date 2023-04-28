@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Cart - Puncakes Bakery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table, td, th {
+          width: 30em;
+          border: 1px solid black;
+        }
+        table {
+          border-collapse: collapse;
+        }
+        table td:nth-child(2) { text-align: end; }
+        table td:nth-child(3) { text-align: end; }
+        body {
+            background-color: #e6ebef;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>The Puncakes Bakery</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="/aboutus">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2> My Cart </h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in cart %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>${{ product.price }}</td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <p>Total: ${{ total }}</p>
+
+    <footer>
+        <p>&copy; Puncakes Bakery 2023</p>
+    </footer>
+</body>
+
+</html>

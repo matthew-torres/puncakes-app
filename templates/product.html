@@ -17,6 +17,11 @@
 
 <head>
   <title>Product Information</title>
+  <style>
+    body {
+        background-color: #e6ebef;
+    }
+    </style>
 </head>
 
 <body>
@@ -36,19 +41,26 @@
       // Get form data
       const form = document.querySelector('#addToCartForm');
       const formData = new FormData(form);
+
       // Convert form data to object
       const object = {};
       formData.forEach((value, key) => {
         if (key === "quantity") {
           object[key] = parseInt(value);
-        } else {
+        }
+        else {
           object[key] = value;
         }
       });
+
       // Add product information to object
       object['id'] = "{{ product[0] }}";
+      object['name'] = "{{ product[1] }}";
+      object['price'] = "{{ product[4] }}";
+
       // Convert object to JSON
       const json = JSON.stringify(object);
+
       // Send JSON data using fetch
       fetch('/add_to_cart', {
         method: 'POST',
@@ -68,6 +80,16 @@
         });
     }
   </script>
+  <br>
+  <li><a href="/">Home</a></li>
+  <li><a href="/products">Products</a></li>
+  <li><a href="/aboutus">About Us</a></li>
+  <li><a href="/contact">Contact Us</a></li>
+  <li><a href="/faq">FAQ</a></li>
+  <br>
+  <footer>
+      <p>&copy; Puncakes Bakery 2023</p>
+  </footer>
 </body>
 
 </html>

@@ -3,9 +3,56 @@
 
 <head>
   <title>Signup Form</title>
-</head>
-
+ <style>
+  body {
+      background-image: url('https://m.media-amazon.com/images/S/assets.wholefoodsmarket.com//content/df/98/6168c1c449489ffa778a198d6a9a/bakery-hero1500x600-2x-v2._TTW_._CR0,0,3000,1200_._SR2000,800_._QL100_.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 125vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .green-box {
+      background-color: #b7e4c7;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    input[type="text"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    input[type="button"] {
+      background-color: #008CBA;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    input[type="button"]:hover {
+      background-color: #0077B3;
+    }
+  </style>
+<head>
 <body>
+<div class="green-box">
   <h1>Employee Signup Form</h1>
   <form method="post">
     <label for="username">Username:</label>
@@ -51,6 +98,14 @@
       formData.forEach((value, key) => {
         object[key] = value;
       });
+	  if (!object.username || !object.email || !object.password || !object.fname || !object.lname || !object.jobTitle || !object.salary || !object.phone_number || !object.startDate || !object.employee_type) {
+        alert("Missing field");
+        return;
+      }
+	  if (object.phone_number.length < 10 || object.phone_number.length >10) {
+    alert("Phone number must be 10 digits");
+    return;
+  }
       // Convert object to JSON
       const json = JSON.stringify(object);
       // Send JSON data using fetch
@@ -73,7 +128,13 @@
     }
   </script>
   <br>
-  <a href="/">Return to Home Page</a>
+  <br>
+  <li><a href="/">Home</a></li>
+  <li><a href="/products">Products</a></li>
+  <li><a href="/aboutus">About Us</a></li>
+  <li><a href="/contact">Contact Us</a></li>
+  <li><a href="/faq">FAQ</a></li>
+  <br>
 </body>
 
 </html>

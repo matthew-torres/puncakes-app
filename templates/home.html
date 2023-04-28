@@ -1,62 +1,121 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Puncakes Bakery</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+			background-image: url("https://wgbh.brightspotcdn.com/dims4/default/7b58d91/2147483647/strip/true/crop/6000x4000+0+0/resize/6000x4000!/quality/70/?url=https%3A%2F%2Fwgbh-brightspot.s3.amazonaws.com%2Fcf%2F63%2Fd47657444e02a472515760939f73%2Fshutterstock-642373528.jpg");
+			background-size: cover;
+			background-position: center;
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			width: 80%;
+			margin: auto;
+			padding: 20px;
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 10px;
+			text-align: center;
+		}
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			z-index: 1;
+			top: 30px;
+			right: 0;
+			background-color: #f1f1f1;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			padding: 12px 16px;
+			border-radius: 5px;
+		}
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+		.dropdown a {
+			color: black;
+			text-decoration: none;
+			display: block;
+			padding: 5px 0;
+		}
+		.dropdown a:hover {
+			background-color: #ddd;
+			border-radius: 5px;
+		}
+		h1 {
+			text-align: center;
+			color: #fff;
+			text-shadow: 2px 2px 4px #000000;
+    }
+    </style>
 </head>
 
-{% if not user_id %}
-{% if isEmployee == true %}
-<h1>Welcome Employee to The Puncakes Bakery Website</h1>
-<p>Have a wonderful day working for Puncakes Incorperated</p>
-{% else %}
-<h1>Welcome to our The Puncakes Bakery</h1>
-<p>Thank you for visiting our website. Discover the best bakery products in town!</p>
-{% endif %}
-{% else %}
-<h1>Welcome to our The Puncakes Bakery</h1>
-<p>Thank you for visiting our website. Discover the best bakery products in town!</p>
-{% endif %}
 
-<img src="../images/loaf_logo_3.png" alt="Puncakes Logo" width="920" height="600">
 
-<ul>
 
-  <li><a href="/logout">Logout</a></li>
-  {% if not isEmployee %}
-  <li><a href="/my_cart/">My Cart</a></li>
+<body>
+<div class="container">
+<header>
+
+  {% if "id" in session %}
+  {% if "isEmployee" == true %}
+  <h1>Welcome Employee to The Puncakes Bakery Website</h1>
+  <h3>Have a wonderful day working for Puncakes Incorperated</h3>
+  {% else %}
+  <h1>Welcome to our The Puncakes Bakery</h1>
+  <h3>Thank you for visiting our website. Discover the best bakery products in town!</h3>
   {% endif %}
-  {% if not user_id %}
-  <li><a href="/signup">Customer Sign Up</a></li>
-  <li><a href="/login">Customer Login</a></li>
-  <br>
-  <li><a href="/employee_login">Employee Login</a></li>
-  <li><a href="/employee_signup">Career Application</a></li>
+  {% else %}
+  <h1>Welcome to our The Puncakes Bakery</h1>
+  <h3>Thank you for visiting our website. Discover the best bakery products in town!</h3>
   {% endif %}
 
-  <br>
+  
+</header>
+    <!--Customer View-->
+    {% if not isEmployee and user_id%}
+    <li><a href="/my_cart/">My Cart</a></li>
+    {% endif %}
+    <!--NonUser View-->
+    {% if not user_id %}
+    <li><a href="/signup">Customer Sign Up</a></li>
+    <li><a href="/login">Customer Login</a></li>
+    <br>
+    <li><a href="/employee_login">Employee Login</a></li>
+    <li><a href="/employee_signup">Career Application</a></li>
+    {% endif %}
 
-  <li><a href="/products">Products</a></li>
-
-  {% if isEmployee == true or isManager == true %}
-  <li><a href="/orders">Orders</a></li>
-  {% endif %}
-
-  {% if isManager == true %}
-  <p>WHAT</p>
-  <li><a href="/employee_signup">Employee Applications</a></li>
-  {% endif %}
+    <br>
 
 
+    <!--Employee View-->
+    {% if isEmployee == true or isManager == true %}
+    <li><a href="/orders">Orders</a></li>
+    {% endif %}
 
-  <br>
+    <!--Manager View-->
+    <!--{% if isManager == true %}
+    <li><a href="/employee_signup">Employee Applications</a></li>
+    {% endif %}-->
 
-  <li><a href="/aboutus">About Us</a></li>
-
-</ul>
+    <!--Logged In View-->
+    {% if user_id%}
+    <li><a href="/logout">Logout</a></li>
+    {% endif %}
+    <nav>
+    <ul>
+      <a href="/">Home</a>
+      <a href="/products">Products</a>
+      <a href="/aboutus">About Us</a>
+      <a href="/contact">Contact Us</a>
+      <a href="/faq">FAQ</a>
+    </ul>
+  </nav>
+	</div>
 </body>
-
 </html>
+

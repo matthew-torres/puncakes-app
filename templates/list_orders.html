@@ -2,9 +2,40 @@
 <html>
   <head>
     <title>Customer Orders</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #b7e4c7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .orders-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 90%;
+        }
+      .orders-container h1 {
+        text-align: center;
+      }
+      .orders-container table {
+        width: 100%;
+          border-collapse: collapse;
+        }
+      .orders-container table th,
+      .orders-container table td {
+        padding: 20px;
+        border: 1px solid black;
+        }
+   </style>
   </head>
   <body>
-    <h1>Orders Catalog</h1>
+  <div class="orders-container">
+      <h1>Orders Catalog</h1>
+  
+    <h2>Orders Catalog</h2>
     <table id="orders-table">
       <thead>
         <tr>
@@ -30,7 +61,19 @@
       </tbody>
     </table>
     <button id="process-orders-button">Process Selected Orders</button>
-    <a href="/">Return to Home Page</a>
+    <header>
+    <nav>
+      <ul>
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/orders">Orders</a>
+        <a href="/aboutus">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/faq">FAQ</a>
+      </ul>
+    </nav>
+  </header>
+    </div>
     <script>
       const processOrdersButton = document.getElementById("process-orders-button");
       const ordersTable = document.getElementById("orders-table");
