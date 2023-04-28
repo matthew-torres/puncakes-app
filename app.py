@@ -163,7 +163,9 @@ def add_to_cart():
 @app.get("/my_cart/")
 def get_customer_cart():
     session['cart'] = utils.consolidate_cart(session['cart'])
-    return session['cart']
+    total = utils.totalize_cart(session['cart'])
+    #return session['cart']
+    return render_template("cart.html", cart=session['cart'], total=total)
 
 
 @app.route("/product/<pid>")
@@ -175,6 +177,11 @@ def get_product_page(pid):
 @app.get("/aboutus")
 def get_about_us():
     return render_template("about.html")  # place holder
+
+
+@app.get("/contact")
+def get_contact():
+    return render_template("contact.html")  # place holder
 
 
 @app.get("/faq")
