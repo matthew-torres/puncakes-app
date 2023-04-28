@@ -109,6 +109,16 @@ def create_tables():
                 CONSTRAINT fk_reviews_customer FOREIGN KEY(cid) REFERENCES customers(cid),
                 CONSTRAINT fk_reviews_product FOREIGN KEY(pid) REFERENCES products(pid)
             );
+            
+            CREATE OR REPLACE FUNCTION get_all_products()
+            RETURNS SETOF RECORD AS
+            $$
+                BEGIN
+                  RETURN QUERY SELECT * FROM products;
+                END;
+            $$
+            LANGUAGE plpgsql;       
+                 
             """)
 
 
@@ -150,7 +160,7 @@ def insert_new_employee(data: any, manager: int) -> None:
             );
                 INSERT INTO employees(fname, lname, salary, email, phone_number, jobTitle, password, startDate, manager) 
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);
-            """, (data['fname'], data['lname'], data['salary'], data['email'], data['phone_number'], data['jobTitle'], data['password'], data['startDate'], manager,))
+            """, (data['fname'], data['lname'], data['salary'], data['email'], data['phone_number'], data['jobTitle'], data['password'], data['startDate'], manager))
 
 
 def insert_new_customer(data: any) -> None:
@@ -298,7 +308,10 @@ def select_all_products() -> list[tuple]:
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(
-                "SELECT * FROM products")
+                "SELECT * FROM get_all_products()" \
+                " f(pid INTEGER, name varchar(50), qtyStock INTEGER," \
+                " expireDate DATE, price NUMERIC(5,2), nutritionFacts VARCHAR(1000)," \
+                " description VARCHAR(1000))")
             product = cursor.fetchall()
             return product
 
