@@ -14,11 +14,23 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
     table {
       margin: auto;
     }
+    table, td, th {
+      margin: auto;
+      width: 40em;
+      border: 1px solid black;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    table td:nth-child(2) { text-align: end; }
+    table td:nth-child(3) { text-align: end; }
   </style>
+
 </head>
 
 <body>
@@ -55,11 +67,11 @@
   <header>
     <nav>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/products">Products</a></li>
-        <li><a href="/aboutus">About Us</a></li>
-        <li><a href="/contact">Contact Us</a></li>
-        <li><a href="/faq">FAQ</a></li>
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/aboutus">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/faq">FAQ</a>
       </ul>
     </nav>
   </header>

@@ -164,14 +164,17 @@ def add_to_cart():
 def get_customer_cart():
     session['cart'] = utils.consolidate_cart(session['cart'])
     total = utils.totalize_cart(session['cart'])
-    #return session['cart']
+    # return session['cart']
     return render_template("cart.html", cart=session['cart'], total=total)
 
 
 @app.route("/product/<pid>")
 def get_product_page(pid):
     product = db.select_product_by_pid(pid)
-    return render_template("product.html", product=product)
+    if 'id' in session:
+        return render_template("product.html", product=product, user_id=session['id'])
+    else:
+        return render_template("product.html", product=product, user_id=False)
 
 
 @app.get("/aboutus")

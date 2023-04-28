@@ -5,23 +5,29 @@
     <title>Contact Us - The Sweet Treats Bakery</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body {
+            background-image: url("https://www.mashed.com/img/gallery/the-best-bakery-in-every-state/intro-1601499029.jpg");
+            background-size: cover;
+        }
+       .center-box {
+          margin: auto;
+          max-width: 800px;
+          background-color: #ffffff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          text-align: left;
+        }
+        .separation {
+          line-height:40px;;
+        }
+      </style>
 </head>
 
 <body>
-
-    <header>
-        <h1>The Puncakes Bakery</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/products">Products</a></li>
-                <li><a href="/aboutus">About Us</a></li>
-                <li><a href="/contact">Contact Us</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-        </nav>
-    </header>
-
+  <div class="center-box">
+    <h1>The Puncakes Bakery</h1>
     <main>
         <h2>Contact Us</h2>
         <p>We'd love to hear from you! Here's how you can get in touch:</p>
@@ -31,7 +37,7 @@
             <li><strong>Email:</strong> info@puncakesbakery.com</li>
         </ul>
         <p>Alternatively, you can use the form below to send us a message:</p>
-        <form action="/submit_contact_form" method="POST">
+        <form class="separation" action="/submit_contact_form" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <br>
@@ -42,16 +48,26 @@
             <input type="text" id="subject" name="subject" required>
             <br>
             <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
+            <textarea id="message" name="message" rows="10" cols="100" required></textarea>
             <br>
             <input type="submit" value="Send">
         </form>
     </main>
+    <header>
+        <nav>
+            <ul>
+                <a href="/">Home</a>
+                <a href="/products">Products</a>
+                <a href="/aboutus">About Us</a>
+                <a href="/faq">FAQ</a>
+            </ul>
+        </nav>
+    </header>
 
     <footer>
         <p>&copy; The Puncakes Bakery</p>
     </footer>
-
+   </div>
 </body>
 
 </html>

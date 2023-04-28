@@ -7,21 +7,23 @@
     body {
       background-color: #b7e4c7;
     }
-
-    #product-form {
-      background-color: white;
-      width: 40%;
-      margin: 0 auto;
-      text-align: center;
-      padding: 20px;
+      .center-box {
+          margin: auto;
+          max-width: 800px;
+          background-color: #ffffff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          text-align: left;
+        }
     }
   </style>
 </head>
 
 <body>
-  <h1>Product Form</h1>
-  <form id="product-form">
-    <label for="name">Name:</label>
+  <div class="center-box">
+   <h1>New Product</h1>
+   <label for="name">Name:</label>
     <input type="text" id="name" name="name" required><br><br>
 
     <label for="qtyStock">Quantity in Stock:</label>
@@ -37,10 +39,24 @@
     <input type="text" id="nutritionFacts" name="nutritionFacts" required><br><br>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+    <textarea id="description" name="description" rows="10" cols="100" required></textarea><br><br>
 
     <input type="button" value="Add Product" onclick="submitForm()">
-  </form>
+   <header>
+        <nav class="title">
+            <ul>
+                <a href="/">Home</a>
+                <a href="/products">Products Catalog</a>
+                <a href="/aboutus">About Us</a>
+                <a href="/contact">Contact Us</a>
+                <a href="/faq">FAQ</a></li>
+            </ul>
+        </nav>
+  </header>
+    <footer>
+        <p>&copy; Puncakes Bakery 2023</p>
+    </footer>
+  </div>
   <script>
     function submitForm() {
       // get form data
