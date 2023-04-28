@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FAQ - Puncakes Bakery</title>
+    <style>
+      body {
+        background-color: #b7e4c7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      h1 {
+        text-align: center;
+        color: black;
+        background-color: #ffffff;
+        padding: 50px;
+        border-radius: 10px;
+		opacity: 0.7;
+      }
+      h2 {
+        color: black;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+      }
+      p {
+        color: black;
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+
+<body>
+  <header>
+    <h1>Puncakes Bakery</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/aboutus">About Us</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <h2>Frequently Asked Questions</h2>
+
+  <h2>Do you have gluten free options?</h2>
+  <p>Yes all of our items come in a gluten free variation.</p>
+  
+  <h2>DO you guys have wifi?</h2>
+  <p>Yes we have public wifi- password free.</p>
+
+  <h2>Do you deliver?</h2>
+  <p>Yes you can order through UberEats or Doordash.</p>
+  
+  <h2>Rye is your bakery named Puncakes if you guys barley have any puns?</h2>
+  <p>Because we wanted to have loafs of puns but are bad at coming up with them</p>
+
+  <!-- additional questions and answers can be added as needed -->
+
+</body>
+
+</html>

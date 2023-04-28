@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Puncake's Product Catalog</title>
+  <style>
+    body {
+      background-color: #b7e4c7;
+    }
+    .center-box {
+      margin: auto;
+      max-width: 800px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    table {
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center-box">
+    <h1>Puncake's Product Catalog</h1>
+    <header>
+    <h1>The Puncakes Bakery</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/aboutus">About Us</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+  <h2>Product Catalog</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Ingredients</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td><a href="/product/{{ product[0] }}">{{ product[1] }}</a></td>
+        <td>{{ product[2] }}</td>
+        <td>${{ product[4] }}</td>
+        <td>{{ product[5] }}</td>
+        <td>{{ product[6] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  {% if isEmployee == true %}
+  <a href="/new_product">Add New Product</a>
+  {%endif%}
+  <footer>
+      <p>&copy; Puncakes Bakery 2023</p>
+  </footer>
+  </div>
+</body>
+
+</html>

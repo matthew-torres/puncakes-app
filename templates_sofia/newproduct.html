@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Product Form</title>
+  <style>
+    body {
+      background-color: #b7e4c7;
+    }
+
+    #product-form {
+      background-color: white;
+      width: 40%;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Product Form</h1>
+  <form id="product-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="qtyStock">Quantity in Stock:</label>
+    <input type="number" id="qtyStock" name="qtyStock" required><br><br>
+
+    <label for="price">Price:</label>
+    <input type="money" id="price" name="price" required><br><br>
+
+    <label for="expireDate">Expiration date:</label>
+    <input type="date" id="expireDate" name="expireDate" required><br><br>
+
+    <label for="nutritionFacts">Nutrition facts:</label>
+    <input type="text" id="nutritionFacts" name="nutritionFacts" required><br><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+
+    <input type="button" value="Add Product" onclick="submitForm()">
+  </form>
+  <script>
+    function submitForm() {
+      // get form data
+      var name = document.getElementById("name").value;
+      var qtyStock = document.getElementById("qtyStock").value;
+      var price = document.getElementById("price").value;
+      var expireDate = document.getElementById("expireDate").value;
+      var nutritionFacts = document.getElementById("nutritionFacts").value;
+      var description = document.getElementById("description").value;
+
+      // create data object
+      var data = {
+        "name": name,
+        "qtyStock": qtyStock,
+        "price": price,
+        "expireDate": expireDate,
+        "nutritionFacts": nutritionFacts,
+        "description": description
+      };
+
+      // send data to server
+      fetch('/new_product', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(function (response) {
+          if (response.ok) {
+            // redirect to products page
+            window.location.replace("/products");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  </script>
+</body>
+
+</html>

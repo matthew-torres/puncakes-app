@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Customer Orders</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #b7e4c7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .orders-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 90%;
+        }
+      .orders-container h1 {
+        text-align: center;
+      }
+      .orders-container table {
+        width: 100%;
+          border-collapse: collapse;
+        }
+      .orders-container table th,
+      .orders-container table td {
+        padding: 20px;
+        border: 1px solid black;
+        }
+   </style>
+  </head>
+  <body>
+  <div class="orders-container">
+      <h1>Orders Catalog</h1>
+  
+    <h2>Orders Catalog</h2>
+    <table id="orders-table">
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th>OID</th>
+          <th>CID</th>
+          <th>Total Amount</th>
+          <th>Time Placed</th>
+          <th>Order Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td><input type="checkbox" name="order_ids[]" value="{{ order[0] }}"></td>
+          <td>{{ order[0] }}</td>
+          <td>{{ order[1] }}</td>
+          <td>{{ order[2] }}</td>
+          <td>{{ order[3] }}</td>
+          <td>{{ order[5] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button id="process-orders-button">Process Selected Orders</button>
+    <header>
+    <nav>
+      <ul>
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/orders">Orders</a>
+        <a href="/aboutus">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/faq">FAQ</a>
+      </ul>
+    </nav>
+  </header>
+    </div>
+    <script>
+      const processOrdersButton = document.getElementById("process-orders-button");
+      const ordersTable = document.getElementById("orders-table");
+      processOrdersButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const selectedOrders = [];
+        const checkboxes = ordersTable.querySelectorAll("input[type='checkbox'][name='order_ids[]']");
+        checkboxes.forEach((checkbox) => {
+          if (checkbox.checked) {
+            const row = checkbox.parentNode.parentNode;
+            const columns = row.querySelectorAll("td");
+            const order = {
+              oid: columns[1].textContent,
+              cid: columns[2].textContent,
+              total_amount: columns[3].textContent,
+              time_placed: columns[4].textContent,
+              order_status: columns[5].textContent,
+            };
+            selectedOrders.push(order);
+          }
+        });
+        fetch("/process_orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(selectedOrders),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            window.location.href = "/orders";
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+    </script>
+    <footer>
+        <p>&copy; Puncakes Bakery 2023</p>
+    </footer>
+  </body>
+</html>

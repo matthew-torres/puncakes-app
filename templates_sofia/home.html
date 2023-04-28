@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Puncakes Bakery</title>
+	<style>
+		body {
+			background-image: url("https://wgbh.brightspotcdn.com/dims4/default/7b58d91/2147483647/strip/true/crop/6000x4000+0+0/resize/6000x4000!/quality/70/?url=https%3A%2F%2Fwgbh-brightspot.s3.amazonaws.com%2Fcf%2F63%2Fd47657444e02a472515760939f73%2Fshutterstock-642373528.jpg");
+			background-size: cover;
+			background-position: center;
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			width: 80%;
+			margin: auto;
+			padding: 20px;
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 10px;
+			text-align: center;
+		}
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			z-index: 1;
+			top: 30px;
+			right: 0;
+			background-color: #f1f1f1;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			padding: 12px 16px;
+			border-radius: 5px;
+		}
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+		.dropdown a {
+			color: black;
+			text-decoration: none;
+			display: block;
+			padding: 5px 0;
+		}
+		.dropdown a:hover {
+			background-color: #ddd;
+			border-radius: 5px;
+		}
+		h1 {
+			text-align: center;
+			color: #fff;
+			text-shadow: 2px 2px 4px #000000;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Puncakes Bakery</h1>
+		<div class="dropdown">
+			<button>Sign Up</button>
+			<div class="dropdown-content">
+				<a href="/signup">Customer Sign Up</a>
+				<a href="/employee_signup">Employee Sign Up</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button>Place Order</button>
+			<div class="dropdown-content">
+				<a href="/products">Order Online</a>
+				<a href="/products">View Menu</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button>Login</button>
+			<div class="dropdown-content">
+				<a href="/login">Customer Login</a>
+				<a href="/employee_login">Manager Login</a>
+				<a href="/employee_login">Staff Login</a>
+				
+			</div>
+		</div>
+		<div class="dropdown">
+			<button>Get to Know Us</button>
+			<div class="dropdown-content">
+				<a href="/faq">FAQs</a>
+				<a href="/aboutus">About Us</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
